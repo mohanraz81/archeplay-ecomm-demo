@@ -24,7 +24,7 @@ def addtocart():
     try:
         cursor = conn.cursor()
         print("Creating User Entity")
-        sql = "CREATE TABLE carttable IF NOT EXISTS ( id INT(11) AUTO_INCREMENT PRIMARY KEY, user VARCHAR(32) NOT NULL, productid VARCHAR(32));"
+        sql = "CREATE TABLE  IF NOT EXISTS carttable ( id INT(11) AUTO_INCREMENT PRIMARY KEY, user VARCHAR(32) NOT NULL, productid VARCHAR(32));"
         cursor.execute(sql)
         cursor = conn.cursor()
         print("Creating User Entity")
@@ -73,4 +73,4 @@ def getcart():
         logger.error("ERROR: Unexpected error: "+str(e))
         conn.rollback()
     conn.close()
-    return(output)
+    return(jsonify(output))

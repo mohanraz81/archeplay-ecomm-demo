@@ -18,8 +18,6 @@ services:
     build:
       context: .
     image: cart-frontend:1.0
-    depends_on:
-      - cart-db
     environment:
       MYSQL_HOST: cart-db
       MYSQL_DATABASE: cartdb
