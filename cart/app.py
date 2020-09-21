@@ -24,6 +24,10 @@ def addtocart():
     try:
         cursor = conn.cursor()
         print("Creating User Entity")
+        sql = "CREATE TABLE carttable IF NOT EXISTS ( id INT(11) AUTO_INCREMENT PRIMARY KEY, user VARCHAR(32) NOT NULL, productid VARCHAR(32));"
+        cursor.execute(sql)
+        cursor = conn.cursor()
+        print("Creating User Entity")
         sql = "INSERT INTO carttable (user,productid) VALUES ('{0}', '{1}');".format(user,productid)
         cursor.execute(sql)
         conn.commit()
@@ -31,7 +35,11 @@ def addtocart():
         logger.error("ERROR: Unexpected error: "+str(e))
         conn.rollback()
     conn.close()
-    return('{"Status: 200","StatusMessage": "Added to Cart"}')
+    successmessage={
+        "Status": 200,
+        "StatusMessage": "Added to Cart"
+    }
+    return(successmessage)
 @app.route('/api/v1.0/getcart', methods=['POST'])
 def getcart():
     rds_host = os.environ['MYSQL_HOST']
@@ -65,4 +73,4 @@ def getcart():
         logger.error("ERROR: Unexpected error: "+str(e))
         conn.rollback()
     conn.close()
-    return(jsonify(output))
+    return(output)

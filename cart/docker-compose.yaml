@@ -1,34 +1,28 @@
 ---
 version: "3.7"
 services:
+  cart-proxy:
+    build:
+      context: ./nginx
+    image: cart-proxy:1.0
+    depends_on:
+      - cart-frontend
+    ports:
+      - "80:80"
+    environment:
+      MYSQL_HOST: cart-db
+      MYSQL_DATABASE: cartdb
+      MYSQL_USER: dbusername
+      MYSQL_PASSWORD: dbpassword
   cart-frontend:
     build:
       context: .
     image: cart-frontend:1.0
     depends_on:
       - cart-db
-    ports:
-      - "8085:5000"
     environment:
       MYSQL_HOST: cart-db
       MYSQL_DATABASE: cartdb
       MYSQL_USER: dbusername
       MYSQL_PASSWORD: dbpassword
-  cart-db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: dbpassword
-      MYSQL_DATABASE: cartdb
-      MYSQL_USER: dbusername
-      MYSQL_PASSWORD: dbpassword
-  cart-intializedb:
-    build:
-      context: ./intializedb
-    image: intializedb
-    depends_on: 
-      - cart-frontend
-    environment:
-      MYSQL_ROOT_PASSWORD: dbpassword
-      MYSQL_DATABASE: cartdb
-      MYSQL_USER: dbusername
-      MYSQL_PASSWORD: dbpassword
+  
