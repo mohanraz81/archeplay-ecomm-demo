@@ -185,7 +185,12 @@ def getallproduct():
   start_key = None
   response = table.scan(**scan_kwargs)
   response=json.loads(json.dumps(response,cls=DecimalEncoder))
-  return(jsonify(response))
+  successmessage={
+      "status": 200,
+      "statusmessage": "Added Items", 
+      "response": response
+  }
+  return(successmessage)
 
 @app.route('/api/v1.0/getproductbyid', methods=['POST'])
 def getproductsbyid():
@@ -199,4 +204,9 @@ def getproductsbyid():
     }
   )
   response=json.loads(json.dumps(response,cls=DecimalEncoder))
-  return(jsonify(response))
+  successmessage={
+      "status": 200,
+      "statusmessage": "Added Items", 
+      "response": response
+  }
+  return(successmessage)
