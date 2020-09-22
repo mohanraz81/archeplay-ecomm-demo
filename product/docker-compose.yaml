@@ -1,32 +1,18 @@
 ---
 version: "3.7"
 services:
-  cart-proxy:
-    build:
-      context: ./nginx
-    image: cart-proxy
-    depends_on:
-      - cart-frontend
-    ports:
-      - "8091:80"
-    environment:
-      MYSQL_HOST: cart-db
-      MYSQL_DATABASE: cartdb
-      MYSQL_USER: dbusername
-      MYSQL_PASSWORD: dbpassword
   product-api:
     build:
       context: .
-    image: product
+    image: product-api
     environment:
       AWS_REGION: REGIONNAME
       TABLE_NAME: TABLENAME
   product-proxy:
     build:
       context: ./nginx
+    depends_on:
+      - product-api
     image: productproxy
     ports:
       - "80:80"
-    environment:
-      AWS_REGION: REGIONNAME
-      TABLE_NAME: TABLENAME

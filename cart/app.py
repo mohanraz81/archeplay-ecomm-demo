@@ -73,4 +73,8 @@ def getcart():
         logger.error("ERROR: Unexpected error: "+str(e))
         conn.rollback()
     conn.close()
-    return(jsonify(output))
+    response={
+      "status": 200,
+      "data": output
+    }
+    return(jsonify(response))

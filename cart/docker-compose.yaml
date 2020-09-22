@@ -4,9 +4,9 @@ services:
   cart-proxy:
     build:
       context: ./nginx
-    image: cart-proxy:1.0
+    image: cart-proxy
     depends_on:
-      - cart-frontend
+      - cart-api
     ports:
       - "80:80"
     environment:
@@ -14,10 +14,10 @@ services:
       MYSQL_DATABASE: cartdb
       MYSQL_USER: dbusername
       MYSQL_PASSWORD: dbpassword
-  cart-frontend:
+  cart-api:
     build:
       context: .
-    image: cart-frontend:1.0
+    image: cart-api
     environment:
       MYSQL_HOST: cart-db
       MYSQL_DATABASE: cartdb
