@@ -6,6 +6,10 @@ import pymysql, base64
 import random,string
 import hashlib,uuid,datetime
 app = Flask(__name__)
+@app.route('/status', methods=['GET'])
+def status():
+    successmessage={"status": 200}
+    return(successmessage)
 @app.route('/api/v1.0/addtocart', methods=['POST'])
 def addtocart():
     rds_host = os.environ['MYSQL_HOST']

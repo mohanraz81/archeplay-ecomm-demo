@@ -1,10 +1,10 @@
 [Unit]
-Description=Start the product
+Description=Start the cart
 After=docker.target
 
 [Service]
 Type=simple
-ExecStart=/bin/docker-compose  -f /archeplay-ecomm-demo/cart/docker-compose.yaml up -d
+ExecStart=/bin/docker-compose  -f /tmp/archeplay-ecomm-demo/cart/docker-compose.yaml up -d
 TimeoutStartSec=0
 
 [Install]
