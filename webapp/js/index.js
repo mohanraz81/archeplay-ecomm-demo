@@ -23,13 +23,15 @@ $(document).ready(function () {
                 id: product_id
             }
         })
-        manageProductAPI({
-            API: getcart.API,
-            type: getcart.type,
-            body: {
-                user: user
-            }
-        })
+        if(sessionStorage.getItem('cart-added')){
+            manageProductAPI({
+                API: getcart.API,
+                type: getcart.type,
+                body: {
+                    user: user
+                }
+            })
+        }
     }
     else if (mycart) {
         document.title = "My Cart - "+user
@@ -48,13 +50,15 @@ $(document).ready(function () {
             API: dumpproduct.API,
             type: dumpproduct.type
         })
-        manageProductAPI({
-            API: getcart.API,
-            type: getcart.type,
-            body: {
-                user: user
-            }
-        })
+        if(sessionStorage.getItem('cart-added')){
+            manageProductAPI({
+                API: getcart.API,
+                type: getcart.type,
+                body: {
+                    user: user
+                }
+            })
+        }
     }
 })
 
@@ -87,7 +91,6 @@ function apiStatusCheck(response, asyncFunction) {
     }
 }
 
-
 function manageProductAPI(apidata) {
     $('.loader-div').removeAttr('hidden')
     $.ajax({
@@ -118,6 +121,7 @@ function manageProductAPI(apidata) {
                         sessionStorage.setItem("mycart", window.btoa(JSON.stringify(myCart)))
                         // $('#my-cart-count').html(myCart.length)
                         showToast('success', 'Item added to cart successfully')
+                        sessionStorage.setItem('cart-added',"yes")
                         setTimeout(function () {
                             window.open('index.html?view-cart=true&user=swaminathan', "_self")
                         }, 500)
@@ -142,7 +146,6 @@ function manageProductAPI(apidata) {
         }
     })
 }
-
 
 function displayProducts() {
     $('#prd-blk').empty()
@@ -178,6 +181,7 @@ $(document).on('click', '.each-prod', function () {
 
 function displayActiveProduct() {
     $('#cur-prod-blk').empty()
+    $('.prod-id').html(curProd.title)
     var row = $('<div class="row m-0 flex-wrap"></div>')
     var left = $('<div class="col-md-4 col-xs-12 p-4 shadow-sm border"><div class="w-100 prod-img" style="height:300px"><img alt=' + curProd.id + ' src="./images/' + curProd.image + '"/></div></div>')
     var right = $('<div class="col-md-8 col-xs-12 shadow-sm border p-0"></div>')
@@ -238,3 +242,7 @@ function displayMyCart() {
     $('#my-cart-sec').removeAttr('hidden')
     $('.loader-div').attr('hidden', true)
 }
+
+$(document).on('click','.to-home',function(){
+    window.open('index.html','_self')
+})
